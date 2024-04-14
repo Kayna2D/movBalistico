@@ -15,8 +15,8 @@ def menu():
     if opcao == 1:
       velocidades()
       print()
-      print(f"Velocidade î: {v0x} m/s")
-      print(f"Velocidade j: {v0y} m/s\n")
+      print(f"Velocidade î: {v0x_rad} m/s")
+      print(f"Velocidade j: {v0y_rad} m/s\n")
     elif opcao == 2:
       altura_max()
       print()
@@ -53,7 +53,7 @@ def menu():
 g = 9.8
 
 def velocidades():
-  global v0x, v0y
+  global v0x, v0y, v0x_rad, v0y_rad
 # Velocidades iniciais nas direções î e j
   v0 = float(input("Velocidade inicial: "))
   angulo = float(input("Ângulo de lançamento: "))
