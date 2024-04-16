@@ -96,7 +96,7 @@ def velocidadesXYi():
   # Velocidades x e y e módulo em determinado instante
   posicaoXYi()
   vx = x / td
-  vy = 2 * (y - h_inicial) / td - (v0y / 2)
+  vy = v0y - g * td
   modulo = sqrt(vx**2 + vy**2)
 
 def velocidadeF():
@@ -105,7 +105,7 @@ def velocidadeF():
   velocidadesXYi()
   vx_final = v0x
   y_final = h_inicial + v0y * t_ar - (g * t_ar**2) / 2
-  vy_final = 2 * (y_final - h_inicial) / t_ar - (v0y / 2)
+  vy_final = 2 * (((y_final - h_inicial) / t_ar) - v0y / 2)
   modulo_final = sqrt(vx_final**2 + vy_final**2)
 
 menu()
