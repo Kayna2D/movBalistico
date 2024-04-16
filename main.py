@@ -56,6 +56,10 @@ def velocidades():
   global v0x, v0y
 # Velocidades iniciais nas direções î e j
   v0 = float(input("Velocidade inicial: "))
+  print("Deseja converter medida? (s/n) ")
+  resp = input()
+  if resp == "s":
+    v0 = converteVel_inicial(v0)
   angulo = float(input("Ângulo de lançamento: "))
   v0x = v0 * cos(radians(angulo))
   v0y = v0 * sin(radians(angulo))
@@ -108,4 +112,17 @@ def velocidadeF():
   vy_final = 2 * (((y_final - h_inicial) / t_ar) - v0y / 2)
   modulo_final = sqrt(vx_final**2 + vy_final**2)
 
+def converteVel_inicial(v0):
+  resp = 0
+  print("Selecione a unidade da velocidade inicial: ") 
+  print("1 - m/s")
+  print("2 - km/h")
+  resp = int(input())
+  if resp == 1:
+    v0 = v0 * 36
+  elif resp == 2:
+    v0 = v0 / 36
+  return v0  
+  
 menu()
+
