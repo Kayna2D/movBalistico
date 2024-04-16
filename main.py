@@ -15,14 +15,14 @@ def menu():
     if opcao == 1:
       velocidades()
       print()
-      print(f"Velocidade î: {v0x_rad} m/s")
-      print(f"Velocidade j: {v0y_rad} m/s\n")
+      print(f"Velocidade î: {v0x} m/s")
+      print(f"Velocidade j: {v0y} m/s\n")
     elif opcao == 2:
       altura_max()
       print()
       print(f"Altura máxima: {h} m\n")
     elif opcao == 3:
-      tempo_subida()
+      tempo_no_ar()
       print()
       print(f"Tempo no ar: {t_ar} s\n")
     elif opcao == 4:
@@ -53,24 +53,31 @@ def menu():
 g = 9.8
 
 def velocidades():
-  global v0x, v0y, v0x_rad, v0y_rad
+  global v0x, v0y
 # Velocidades iniciais nas direções î e j
   v0 = float(input("Velocidade inicial: "))
+  print("Deseja converter medida? (s/n) ")
+  resp = input()
+  if resp == "s":
+    v0 = converteVelInicial(v0)
   angulo = float(input("Ângulo de lançamento: "))
-  v0x_rad = v0 * cos(radians(angulo))
-  v0y_rad = v0 * sin(radians(angulo))
-
-  v0x = v0 * v0x_rad
-  v0y = v0 * v0y_rad
+  v0x = v0 * cos(radians(angulo))
+  v0y = v0 * sin(radians(angulo))
 
 def altura_max():
   global h 
   # Altura máxima
   velocidades()
   h_inicial = float(input("Altura a partir do solo: "))
-  h = (v0y ** 2 + 2 * g * h_inicial) / (2 * g)
+  print("Deseja converter medida? (s/n) ")
+  resp = input()
+  if resp == "s":
+    h_inicial = converteH(h_inicial)
+  
+  h = (v0y ** 2 + 2 * g * (h_inicial / 100)) / (2 * g)
 
-def tempo_subida():
+
+def tempo_no_ar():
   global t_ar
   # Tempo no ar
   altura_max()
@@ -81,7 +88,7 @@ def tempo_subida():
 def alcance_horiontal():
   global x_max
   # Alcance máximo horizontal
-  tempo_subida()
+  tempo_no_ar()
   x_max = v0x * t_ar
 
 def posicaoXYi():
@@ -91,14 +98,14 @@ def posicaoXYi():
   td = float(input("Instante: "))
   h_inicial = float(input("Altura a partir do solo: "))
   x = v0x * td
-  y = h_inicial + v0y * td - (g * td**2) / 2
+  y = (h_inicial/100) + (v0y * td) - (g * (td**2)) / 2
 
 def velocidadesXYi():
   global modulo, vx, vy
   # Velocidades x e y e módulo em determinado instante
   posicaoXYi()
   vx = x / td
-  vy = 2 * (y - h_inicial) / td - (v0y / 2)
+  vy = v0y - g * td
   modulo = sqrt(vx**2 + vy**2)
 
 def velocidadeF():
@@ -107,7 +114,32 @@ def velocidadeF():
   velocidadesXYi()
   vx_final = v0x
   y_final = h_inicial + v0y * t_ar - (g * t_ar**2) / 2
-  vy_final = 2 * (y_final - h_inicial) / t_ar - (v0y / 2)
+  vy_final = 2 * (((y_final - h_inicial) / t_ar) - v0y / 2)
   modulo_final = sqrt(vx_final**2 + vy_final**2)
 
+def converteVelInicial(v0):
+  resp = 0
+  print("Selecione a unidade da velocidade inicial: ") 
+  print("1 - m/s")
+  print("2 - km/h")
+  resp = int(input())
+  if resp == 1:
+    v0 = v0 * 36
+  elif resp == 2:
+    v0 = v0 / 36
+  return v0  
+
+def converteH(h):
+  resp = 0
+  print("Selecione a unidade da altura inicial: ") 
+  print("1 - cm")
+  print("2 - m")
+  resp = int(input())
+  if resp == 1:
+    h = h / 100
+  elif resp == 2:
+    h = h * 100
+  return h 
+  
 menu()
+
