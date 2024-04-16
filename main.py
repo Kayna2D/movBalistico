@@ -59,7 +59,7 @@ def velocidades():
   print("Deseja converter medida? (s/n) ")
   resp = input()
   if resp == "s":
-    v0 = converteVel_inicial(v0)
+    v0 = converteVelInicial(v0)
   angulo = float(input("Ângulo de lançamento: "))
   v0x = v0 * cos(radians(angulo))
   v0y = v0 * sin(radians(angulo))
@@ -69,6 +69,11 @@ def altura_max():
   # Altura máxima
   velocidades()
   h_inicial = float(input("Altura a partir do solo: "))
+  print("Deseja converter medida? (s/n) ")
+  resp = input()
+  if resp == "s":
+    h_inicial = converteH(h_inicial)
+  
   h = (v0y ** 2 + 2 * g * (h_inicial / 100)) / (2 * g)
 
 
@@ -112,7 +117,7 @@ def velocidadeF():
   vy_final = 2 * (((y_final - h_inicial) / t_ar) - v0y / 2)
   modulo_final = sqrt(vx_final**2 + vy_final**2)
 
-def converteVel_inicial(v0):
+def converteVelInicial(v0):
   resp = 0
   print("Selecione a unidade da velocidade inicial: ") 
   print("1 - m/s")
@@ -123,6 +128,18 @@ def converteVel_inicial(v0):
   elif resp == 2:
     v0 = v0 / 36
   return v0  
+
+def converteH(h):
+  resp = 0
+  print("Selecione a unidade da altura inicial: ") 
+  print("1 - cm")
+  print("2 - m")
+  resp = int(input())
+  if resp == 1:
+    h = h / 100
+  elif resp == 2:
+    h = h * 100
+  return h 
   
 menu()
 
