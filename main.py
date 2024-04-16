@@ -22,7 +22,7 @@ def menu():
       print()
       print(f"Altura máxima: {h} m\n")
     elif opcao == 3:
-      tempo_subida()
+      tempo_no_ar()
       print()
       print(f"Tempo no ar: {t_ar} s\n")
     elif opcao == 4:
@@ -65,9 +65,10 @@ def altura_max():
   # Altura máxima
   velocidades()
   h_inicial = float(input("Altura a partir do solo: "))
-  h = (v0y ** 2 + 2 * g * h_inicial) / (2 * g)
+  h = (v0y ** 2 + 2 * g * (h_inicial / 100)) / (2 * g)
 
-def tempo_subida():
+
+def tempo_no_ar():
   global t_ar
   # Tempo no ar
   altura_max()
@@ -78,7 +79,7 @@ def tempo_subida():
 def alcance_horiontal():
   global x_max
   # Alcance máximo horizontal
-  tempo_subida()
+  tempo_no_ar()
   x_max = v0x * t_ar
 
 def posicaoXYi():
@@ -88,7 +89,7 @@ def posicaoXYi():
   td = float(input("Instante: "))
   h_inicial = float(input("Altura a partir do solo: "))
   x = v0x * td
-  y = h_inicial + v0y * td - (g * td**2) / 2
+  y = (h_inicial/100) + (v0y * td) - (g * (td**2)) / 2
 
 def velocidadesXYi():
   global modulo, vx, vy
