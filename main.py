@@ -2,7 +2,7 @@ from math import cos, sin, radians, sqrt
 
 def menu():
   while True:
-    print("1 - Velocidades nas direções î e j")
+    print("1 - Velocidades iniciais nas direções î e j")
     print("2 - Altura máxima")
     print("3 - Tempo no ar")
     print("4 - Alcance maximo horizontal")
@@ -65,7 +65,7 @@ def velocidades():
   v0y = v0 * sin(radians(angulo))
 
 def altura_max():
-  global h 
+  global h, h_inicial 
   # Altura máxima
   velocidades()
   h_inicial = float(input("Altura a partir do solo: "))
@@ -74,7 +74,7 @@ def altura_max():
   if resp == "s":
     h_inicial = converteH(h_inicial)
 
-  h = (v0y ** 2 + 2 * g * (h_inicial / 100)) / (2 * g)
+  h = (v0y ** 2 + 2 * g * h_inicial) / (2 * g)
 
 
 def tempo_no_ar():
@@ -96,9 +96,8 @@ def posicaoXYi():
   # Posições x e y em determinado instante
   alcance_horiontal()
   td = float(input("Instante: "))
-  h_inicial = float(input("Altura a partir do solo: "))
   x = v0x * td
-  y = (h_inicial/100) + (v0y * td) - (g * (td**2)) / 2
+  y = h_inicial + (v0y * td) - (g * (td**2)) / 2
 
 def velocidadesXYi():
   global modulo, vx, vy
